@@ -48,7 +48,7 @@ function LandingPage(): ReactNode {
               CohortBuilder
             </span>
           </div>
-          <Link to="/demo">
+          <Link to="/builder">
             <button className="px-6 py-2.5 rounded-full bg-gradient-to-b from-[#f8f8f8] to-[#e8e8e8] border border-white/60 shadow-[0_2px_8px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.9)] text-[#555] font-medium hover:shadow-[0_4px_16px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.9)] transition-all duration-300">
               Launch App
             </button>
@@ -59,12 +59,6 @@ function LandingPage(): ReactNode {
       {/* Hero Section */}
       <header className="relative z-10 px-8 pt-20 pb-32">
         <div className="max-w-5xl mx-auto text-center">
-          {/* Chrome pill badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full bg-gradient-to-b from-white to-[#f5f5f5] border border-[#e0e0e0] shadow-[0_2px_12px_rgba(0,0,0,0.06),inset_0_1px_0_rgba(255,255,255,1)]">
-            <span className="w-2 h-2 rounded-full bg-gradient-to-b from-[#10b981] to-[#059669] shadow-[0_0_8px_rgba(16,185,129,0.4)]"></span>
-            <span className="text-sm font-medium text-[#666]">FHIR R4 Compatible</span>
-          </div>
-
           {/* Main heading with chrome effect */}
           <h1 className="text-6xl md:text-7xl font-bold mb-6 leading-tight">
             <span className="bg-gradient-to-b from-[#2a2a2a] via-[#4a4a4a] to-[#6a6a6a] bg-clip-text text-transparent drop-shadow-sm">
@@ -83,7 +77,7 @@ function LandingPage(): ReactNode {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link to="/demo">
+            <Link to="/builder">
               <button className="group relative px-10 py-4 rounded-2xl font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-[1.02]">
                 <div className="absolute inset-0 bg-gradient-to-b from-[#444] via-[#555] to-[#333] rounded-2xl"></div>
                 <div className="absolute inset-[1px] bg-gradient-to-b from-[#666] via-[#555] to-[#444] rounded-2xl"></div>
@@ -210,7 +204,7 @@ function LandingPage(): ReactNode {
             Start building patient cohorts with precision and efficiency.
             Your next breakthrough begins here.
           </p>
-          <Link to="/demo">
+          <Link to="/builder">
             <button className="group relative px-14 py-5 rounded-2xl font-semibold text-xl overflow-hidden transition-all duration-300 hover:scale-[1.02] shadow-[0_8px_32px_rgba(0,0,0,0.12)]">
               <div className="absolute inset-0 bg-gradient-to-b from-[#444] via-[#555] to-[#333] rounded-2xl"></div>
               <div className="absolute inset-[1px] bg-gradient-to-b from-[#666] via-[#555] to-[#444] rounded-2xl"></div>
