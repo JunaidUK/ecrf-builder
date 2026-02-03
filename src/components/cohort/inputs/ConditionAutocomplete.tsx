@@ -183,7 +183,7 @@ export function ConditionAutocomplete({
           width: 100%;
           padding: 8px 12px;
           font-size: 14px;
-          border: 1px solid #d1d5db;
+          border: 1px solid var(--chrome-border-glow);
           border-radius: 6px;
           outline: none;
           transition: border-color 0.2s, box-shadow 0.2s;
@@ -195,14 +195,14 @@ export function ConditionAutocomplete({
         }
 
         .autocomplete-input:disabled {
-          background-color: #f3f4f6;
+          background-color: var(--chrome-bg-muted);
           cursor: not-allowed;
         }
 
         .autocomplete-spinner {
           position: absolute;
           right: 12px;
-          color: #6b7280;
+          color: var(--chrome-text-secondary);
         }
 
         .autocomplete-error {
@@ -220,7 +220,7 @@ export function ConditionAutocomplete({
           padding: 0;
           list-style: none;
           background: white;
-          border: 1px solid #d1d5db;
+          border: 1px solid var(--chrome-border-glow);
           border-radius: 6px;
           box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
           max-height: 300px;
@@ -231,7 +231,7 @@ export function ConditionAutocomplete({
         .autocomplete-result-item {
           padding: 10px 12px;
           cursor: pointer;
-          border-bottom: 1px solid #f3f4f6;
+          border-bottom: 1px solid var(--chrome-bg-muted);
         }
 
         .autocomplete-result-item:last-child {
@@ -240,13 +240,13 @@ export function ConditionAutocomplete({
 
         .autocomplete-result-item:hover,
         .autocomplete-result-item.highlighted {
-          background-color: #f3f4f6;
+          background-color: var(--chrome-bg-muted);
         }
 
         .result-condition {
           font-size: 14px;
           font-weight: 500;
-          color: #111827;
+          color: var(--chrome-text-heading-primary);
           margin-bottom: 4px;
         }
 
@@ -263,7 +263,7 @@ export function ConditionAutocomplete({
         }
 
         .snomed-code {
-          color: #6b7280;
+          color: var(--chrome-text-secondary);
           font-family: monospace;
         }
       `}</style>

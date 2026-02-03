@@ -1,1 +1,48 @@
 @import 'tailwindcss';
+
+:root {
+  /* Text Colors (Dark → Light) */
+  --chrome-text-heading-primary: #2a2a2a;
+  --chrome-text-heading: #333;
+  --chrome-text-heading-mid: #4a4a4a;
+  --chrome-text-heading-light: #6a6a6a;
+  --chrome-text-primary: #444;
+  --chrome-text-body: #555;
+  --chrome-text-secondary: #666;
+  --chrome-text-muted: #777;
+  --chrome-text-tertiary: #888;
+  --chrome-text-disabled: #999;
+  --chrome-text-subtle: #aaa;
+
+  /* Background Colors (Light → Dark) */
+  --chrome-bg-page: #f8f9fa;
+  --chrome-bg-page-end: #f0f2f5;
+  --chrome-bg-surface: #fafafa;
+  --chrome-bg-elevated: #f8f8f8;
+  --chrome-bg-hover: #f5f5f5;
+  --chrome-bg-muted: #f0f0f0;
+  --chrome-bg-panel-end: #efefef;
+  --chrome-bg-accent: #e8e8e8;
+  --chrome-bg-inset: #e0e0e0;
+  --chrome-bg-chrome-dark: #d8d8d8;
+  --chrome-bg-chrome-darkest: #c8c8c8;
+
+  /* Terminal/Code Colors */
+  --chrome-bg-terminal: #2a2a2a;
+  --chrome-bg-terminal-dark: #1a1a1a;
+  --chrome-border-terminal: #3a3a3a;
+  --chrome-accent-code: #88d888;
+
+  /* Border Colors */
+  --chrome-border-light: #e8e8e8;
+  --chrome-border-default: #e0e0e0;
+  --chrome-border-glow: #d4d4d4;
+  --chrome-border-divider: #d0d0d0;
+
+  /* Button Gradient Colors */
+  --chrome-btn-dark-from: #444;
+  --chrome-btn-dark-via: #555;
+  --chrome-btn-dark-to: #333;
+  --chrome-btn-inner-from: #666;
+  --chrome-btn-inner-to: #444;
+}

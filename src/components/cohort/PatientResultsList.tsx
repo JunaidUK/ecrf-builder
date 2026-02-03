@@ -55,17 +55,17 @@ export function PatientResultsList({
   if (isLoading) {
     return (
       <div className="relative">
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-[#e8e8e8] via-[#ffffff] to-[#d4d4d4] rounded-xl opacity-75 blur-sm"></div>
-        <div className="relative bg-gradient-to-br from-[#fafafa] to-[#f5f5f5] rounded-xl border border-white/50 p-8 text-center shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-[var(--chrome-bg-accent)] via-[#ffffff] to-[var(--chrome-border-glow)] rounded-xl opacity-75 blur-sm"></div>
+        <div className="relative bg-gradient-to-br from-[var(--chrome-bg-surface)] to-[var(--chrome-bg-hover)] rounded-xl border border-white/50 p-8 text-center shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
           <div className="animate-pulse">
-            <div className="h-4 bg-gradient-to-r from-[#e0e0e0] to-[#d0d0d0] rounded w-1/4 mx-auto mb-4"></div>
+            <div className="h-4 bg-gradient-to-r from-[var(--chrome-bg-inset)] to-[var(--chrome-border-divider)] rounded w-1/4 mx-auto mb-4"></div>
             <div className="space-y-3">
-              <div className="h-12 bg-gradient-to-r from-[#e8e8e8] to-[#e0e0e0] rounded-lg"></div>
-              <div className="h-12 bg-gradient-to-r from-[#e8e8e8] to-[#e0e0e0] rounded-lg"></div>
-              <div className="h-12 bg-gradient-to-r from-[#e8e8e8] to-[#e0e0e0] rounded-lg"></div>
+              <div className="h-12 bg-gradient-to-r from-[var(--chrome-bg-accent)] to-[var(--chrome-bg-inset)] rounded-lg"></div>
+              <div className="h-12 bg-gradient-to-r from-[var(--chrome-bg-accent)] to-[var(--chrome-bg-inset)] rounded-lg"></div>
+              <div className="h-12 bg-gradient-to-r from-[var(--chrome-bg-accent)] to-[var(--chrome-bg-inset)] rounded-lg"></div>
             </div>
           </div>
-          <p className="text-[#888] mt-4">Searching patients...</p>
+          <p className="text-[var(--chrome-text-tertiary)] mt-4">Searching patients...</p>
         </div>
       </div>
     );
@@ -86,9 +86,9 @@ export function PatientResultsList({
   if (patients.length === 0) {
     return (
       <div className="relative">
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-[#e8e8e8] via-[#ffffff] to-[#d4d4d4] rounded-xl opacity-75 blur-sm"></div>
-        <div className="relative bg-gradient-to-br from-[#fafafa] to-[#f5f5f5] rounded-xl border border-white/50 p-8 text-center shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
-          <p className="text-[#888]">No patients match the search criteria</p>
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-[var(--chrome-bg-accent)] via-[#ffffff] to-[var(--chrome-border-glow)] rounded-xl opacity-75 blur-sm"></div>
+        <div className="relative bg-gradient-to-br from-[var(--chrome-bg-surface)] to-[var(--chrome-bg-hover)] rounded-xl border border-white/50 p-8 text-center shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
+          <p className="text-[var(--chrome-text-tertiary)]">No patients match the search criteria</p>
         </div>
       </div>
     );
@@ -96,12 +96,12 @@ export function PatientResultsList({
 
   return (
     <div className="relative">
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-[#e8e8e8] via-[#ffffff] to-[#d4d4d4] rounded-xl opacity-75 blur-sm"></div>
-      <div className="relative bg-gradient-to-br from-[#fafafa] to-[#f5f5f5] rounded-xl border border-white/50 overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
-        <div className="px-4 py-3 bg-gradient-to-b from-[#f5f5f5] to-[#efefef] border-b border-[#e0e0e0]">
-          <h3 className="text-sm font-semibold bg-gradient-to-b from-[#333] to-[#666] bg-clip-text text-transparent">
+      <div className="absolute -inset-0.5 bg-gradient-to-r from-[var(--chrome-bg-accent)] via-[#ffffff] to-[var(--chrome-border-glow)] rounded-xl opacity-75 blur-sm"></div>
+      <div className="relative bg-gradient-to-br from-[var(--chrome-bg-surface)] to-[var(--chrome-bg-hover)] rounded-xl border border-white/50 overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
+        <div className="px-4 py-3 bg-gradient-to-b from-[var(--chrome-bg-hover)] to-[var(--chrome-bg-panel-end)] border-b border-[var(--chrome-border-default)]">
+          <h3 className="text-sm font-semibold bg-gradient-to-b from-[var(--chrome-text-heading)] to-[var(--chrome-text-secondary)] bg-clip-text text-transparent">
             Search Results
-            <span className="ml-2 text-[#888] font-normal">
+            <span className="ml-2 text-[var(--chrome-text-tertiary)] font-normal">
               ({total} patient{total !== 1 ? 's' : ''} found
               {patients.length < total ? `, showing ${patients.length}` : ''})
             </span>
@@ -109,31 +109,31 @@ export function PatientResultsList({
         </div>
 
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-[#e8e8e8]">
-            <thead className="bg-gradient-to-b from-[#f8f8f8] to-[#f0f0f0]">
+          <table className="min-w-full divide-y divide-[var(--chrome-border-light)]">
+            <thead className="bg-gradient-to-b from-[var(--chrome-bg-elevated)] to-[var(--chrome-bg-muted)]">
               <tr>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-[#666] uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-semibold text-[var(--chrome-text-secondary)] uppercase tracking-wider">
                   Name
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-[#666] uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-semibold text-[var(--chrome-text-secondary)] uppercase tracking-wider">
                   Gender
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-[#666] uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-semibold text-[var(--chrome-text-secondary)] uppercase tracking-wider">
                   Birth Date
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-[#666] uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-semibold text-[var(--chrome-text-secondary)] uppercase tracking-wider">
                   Age
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-[#666] uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-semibold text-[var(--chrome-text-secondary)] uppercase tracking-wider">
                   ID
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white/50 divide-y divide-[#e8e8e8]">
+            <tbody className="bg-white/50 divide-y divide-[var(--chrome-border-light)]">
               {patients.map((patient) => (
                 <tr
                   key={patient.id}
-                  className={`hover:bg-gradient-to-r hover:from-[#f8f8f8] hover:to-[#f0f0f0] transition-all duration-200 ${onPatientClick ? 'cursor-pointer' : ''}`}
+                  className={`hover:bg-gradient-to-r hover:from-[var(--chrome-bg-elevated)] hover:to-[var(--chrome-bg-muted)] transition-all duration-200 ${onPatientClick ? 'cursor-pointer' : ''}`}
                   onClick={() => onPatientClick?.(patient)}
                   role={onPatientClick ? 'button' : undefined}
                   tabIndex={onPatientClick ? 0 : undefined}
@@ -144,19 +144,19 @@ export function PatientResultsList({
                     }
                   }}
                 >
-                  <td className="px-4 py-3 text-sm text-[#333]">
+                  <td className="px-4 py-3 text-sm text-[var(--chrome-text-heading)]">
                     {getPatientName(patient)}
                   </td>
-                  <td className="px-4 py-3 text-sm text-[#666]">
+                  <td className="px-4 py-3 text-sm text-[var(--chrome-text-secondary)]">
                     {formatGender(patient.gender)}
                   </td>
-                  <td className="px-4 py-3 text-sm text-[#666]">
+                  <td className="px-4 py-3 text-sm text-[var(--chrome-text-secondary)]">
                     {patient.birthDate ?? 'Unknown'}
                   </td>
-                  <td className="px-4 py-3 text-sm text-[#666]">
+                  <td className="px-4 py-3 text-sm text-[var(--chrome-text-secondary)]">
                     {getPatientAge(patient.birthDate)}
                   </td>
-                  <td className="px-4 py-3 text-sm text-[#999] font-mono">
+                  <td className="px-4 py-3 text-sm text-[var(--chrome-text-disabled)] font-mono">
                     {patient.id?.slice(0, 8)}...
                   </td>
                 </tr>

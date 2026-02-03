@@ -83,21 +83,21 @@ export function CohortBuilderPage(): ReactNode {
   const hasResults = queryResults !== null || queryError !== null;
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-b from-[#f8f9fa] via-[#ffffff] to-[#f0f2f5]">
-      <header className="bg-gradient-to-b from-white to-[#f8f8f8] border-b border-[#e0e0e0] px-6 py-4 flex-shrink-0 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+    <div className="flex flex-col min-h-screen bg-gradient-to-b from-[var(--chrome-bg-page)] via-[#ffffff] to-[var(--chrome-bg-page-end)]">
+      <header className="bg-gradient-to-b from-white to-[var(--chrome-bg-elevated)] border-b border-[var(--chrome-border-default)] px-6 py-4 flex-shrink-0 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Link to="/" className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#f0f0f0] via-[#e0e0e0] to-[#c8c8c8] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_2px_8px_rgba(0,0,0,0.1)] border border-white/50 flex items-center justify-center">
-                <span className="text-sm font-bold bg-gradient-to-b from-[#555] to-[#888] bg-clip-text text-transparent">C</span>
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[var(--chrome-bg-muted)] via-[var(--chrome-bg-inset)] to-[var(--chrome-bg-chrome-darkest)] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_2px_8px_rgba(0,0,0,0.1)] border border-white/50 flex items-center justify-center">
+                <span className="text-sm font-bold bg-gradient-to-b from-[var(--chrome-text-body)] to-[var(--chrome-text-tertiary)] bg-clip-text text-transparent">C</span>
               </div>
             </Link>
-            <h1 className="text-xl font-semibold bg-gradient-to-b from-[#333] to-[#666] bg-clip-text text-transparent">
+            <h1 className="text-xl font-semibold bg-gradient-to-b from-[var(--chrome-text-heading)] to-[var(--chrome-text-secondary)] bg-clip-text text-transparent">
               Cohort Search Builder
             </h1>
           </div>
           <Link to="/">
-            <button className="px-5 py-2 rounded-full bg-gradient-to-b from-[#f8f8f8] to-[#e8e8e8] border border-white/60 shadow-[0_2px_8px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.9)] text-[#555] font-medium hover:shadow-[0_4px_16px_rgba(0,0,0,0.12)] transition-all duration-300 text-sm">
+            <button className="px-5 py-2 rounded-full bg-gradient-to-b from-[var(--chrome-bg-elevated)] to-[var(--chrome-bg-accent)] border border-white/60 shadow-[0_2px_8px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.9)] text-[var(--chrome-text-body)] font-medium hover:shadow-[0_4px_16px_rgba(0,0,0,0.12)] transition-all duration-300 text-sm">
               Back
             </button>
           </Link>
@@ -127,8 +127,8 @@ export function CohortBuilderPage(): ReactNode {
                 disabled={isExecutingQuery}
                 className="group relative px-8 py-3 rounded-xl font-semibold overflow-hidden transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
-                <div className="absolute inset-0 bg-gradient-to-b from-[#444] via-[#555] to-[#333] rounded-xl"></div>
-                <div className="absolute inset-[1px] bg-gradient-to-b from-[#666] via-[#555] to-[#444] rounded-xl"></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-[var(--chrome-btn-dark-from)] via-[var(--chrome-btn-dark-via)] to-[var(--chrome-btn-dark-to)] rounded-xl"></div>
+                <div className="absolute inset-[1px] bg-gradient-to-b from-[var(--chrome-btn-inner-from)] via-[var(--chrome-btn-dark-via)] to-[var(--chrome-btn-inner-to)] rounded-xl"></div>
                 <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <span className="relative text-white drop-shadow-sm">
                   {isExecutingQuery ? 'Searching...' : 'Search Patients'}

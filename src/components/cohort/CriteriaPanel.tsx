@@ -31,10 +31,10 @@ function CriteriaButton({ label, onClick }: CriteriaButtonProps): ReactNode {
   return (
     <button
       onClick={onClick}
-      className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[#555] hover:bg-gradient-to-r hover:from-[#f0f0f0] hover:to-[#e8e8e8] hover:text-[#333] rounded-lg transition-all duration-200"
+      className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[var(--chrome-text-body)] hover:bg-gradient-to-r hover:from-[var(--chrome-bg-muted)] hover:to-[var(--chrome-bg-accent)] hover:text-[var(--chrome-text-heading)] rounded-lg transition-all duration-200"
       aria-label={`Add ${label}`}
     >
-      <span className="w-5 h-5 rounded-md bg-gradient-to-b from-[#f0f0f0] to-[#e0e0e0] border border-white/60 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)] flex items-center justify-center text-xs text-[#666]">+</span>
+      <span className="w-5 h-5 rounded-md bg-gradient-to-b from-[var(--chrome-bg-muted)] to-[var(--chrome-bg-inset)] border border-white/60 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)] flex items-center justify-center text-xs text-[var(--chrome-text-secondary)]">+</span>
       {label}
     </button>
   );
@@ -54,15 +54,15 @@ function CollapsibleSection({
   children,
 }: CollapsibleSectionProps): ReactNode {
   return (
-    <div className="border-b border-[#e8e8e8] last:border-b-0">
+    <div className="border-b border-[var(--chrome-border-light)] last:border-b-0">
       <button
         onClick={onToggle}
-        className="w-full flex items-center justify-between px-4 py-3 text-sm font-semibold bg-gradient-to-b from-[#333] to-[#555] bg-clip-text text-transparent hover:from-[#222] hover:to-[#444]"
+        className="w-full flex items-center justify-between px-4 py-3 text-sm font-semibold bg-gradient-to-b from-[var(--chrome-text-heading)] to-[var(--chrome-text-body)] bg-clip-text text-transparent hover:from-[#222] hover:to-[var(--chrome-text-primary)]"
         aria-label={`Toggle ${title} section`}
         aria-expanded={isExpanded}
       >
         {title}
-        <span className="text-[#999]">{isExpanded ? '▼' : '▶'}</span>
+        <span className="text-[var(--chrome-text-disabled)]">{isExpanded ? '▼' : '▶'}</span>
       </button>
       {isExpanded && <div className="pb-3 px-1">{children}</div>}
     </div>
@@ -102,10 +102,10 @@ export function CriteriaPanel({
 
   if (isCollapsed) {
     return (
-      <div className="w-12 bg-gradient-to-b from-white to-[#f8f8f8] border-r border-[#e0e0e0] flex flex-col shadow-[2px_0_8px_rgba(0,0,0,0.04)]">
+      <div className="w-12 bg-gradient-to-b from-white to-[var(--chrome-bg-elevated)] border-r border-[var(--chrome-border-default)] flex flex-col shadow-[2px_0_8px_rgba(0,0,0,0.04)]">
         <button
           onClick={onToggleCollapse}
-          className="p-3 text-[#888] hover:text-[#555] hover:bg-gradient-to-b hover:from-[#f5f5f5] hover:to-[#e8e8e8] transition-all duration-200"
+          className="p-3 text-[var(--chrome-text-tertiary)] hover:text-[var(--chrome-text-body)] hover:bg-gradient-to-b hover:from-[var(--chrome-bg-hover)] hover:to-[var(--chrome-bg-accent)] transition-all duration-200"
           aria-label="Expand criteria panel"
         >
           ▶
@@ -115,12 +115,12 @@ export function CriteriaPanel({
   }
 
   return (
-    <div className="w-64 bg-gradient-to-b from-white to-[#fafafa] border-r border-[#e0e0e0] flex flex-col shadow-[2px_0_8px_rgba(0,0,0,0.04)]">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-[#e8e8e8] bg-gradient-to-b from-[#fafafa] to-[#f5f5f5]">
-        <h2 className="text-sm font-semibold bg-gradient-to-b from-[#333] to-[#666] bg-clip-text text-transparent uppercase tracking-wider">Criteria</h2>
+    <div className="w-64 bg-gradient-to-b from-white to-[var(--chrome-bg-surface)] border-r border-[var(--chrome-border-default)] flex flex-col shadow-[2px_0_8px_rgba(0,0,0,0.04)]">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--chrome-border-light)] bg-gradient-to-b from-[var(--chrome-bg-surface)] to-[var(--chrome-bg-hover)]">
+        <h2 className="text-sm font-semibold bg-gradient-to-b from-[var(--chrome-text-heading)] to-[var(--chrome-text-secondary)] bg-clip-text text-transparent uppercase tracking-wider">Criteria</h2>
         <button
           onClick={onToggleCollapse}
-          className="p-1.5 text-[#888] hover:text-[#555] hover:bg-gradient-to-b hover:from-[#f0f0f0] hover:to-[#e0e0e0] rounded-lg transition-all duration-200"
+          className="p-1.5 text-[var(--chrome-text-tertiary)] hover:text-[var(--chrome-text-body)] hover:bg-gradient-to-b hover:from-[var(--chrome-bg-muted)] hover:to-[var(--chrome-bg-inset)] rounded-lg transition-all duration-200"
           aria-label="Collapse criteria panel"
         >
           ◀
@@ -148,8 +148,8 @@ export function CriteriaPanel({
               placeholder="Search conditions..."
             />
           </div>
-          <div className="border-t border-[#e8e8e8] mt-2 pt-2">
-            <div className="px-3 py-1 text-xs text-[#888] font-medium uppercase tracking-wide">Quick Add</div>
+          <div className="border-t border-[var(--chrome-border-light)] mt-2 pt-2">
+            <div className="px-3 py-1 text-xs text-[var(--chrome-text-tertiary)] font-medium uppercase tracking-wide">Quick Add</div>
             <CriteriaButton
               label="Hypertension"
               onClick={() => handleAddCondition('hypertension')}
