@@ -3,7 +3,6 @@ import type { ReactNode } from 'react';
 import type { Patient, Resource } from 'fhir/r4';
 import { Link } from 'react-router-dom';
 import { useCohortSearch } from '../context/CohortSearchContext';
-import { Button } from '../components/common/Button';
 import { CriteriaPanel } from '../components/cohort/CriteriaPanel';
 import { CriteriaList } from '../components/cohort/CriteriaList';
 import { QueryPreviewPanel } from '../components/cohort/QueryPreviewPanel';
@@ -84,14 +83,23 @@ export function CohortBuilderPage(): ReactNode {
   const hasResults = queryResults !== null || queryError !== null;
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200 px-6 py-4 flex-shrink-0">
-        <div className="flex items-center justify-between max-w-7xl mx-auto">
-          <h1 className="text-2xl font-semibold text-gray-900">
-            Cohort Search Builder
-          </h1>
-          <Link to="/demo">
-            <Button variant="outline">Back</Button>
+    <div className="flex flex-col min-h-screen bg-gradient-to-b from-[#f8f9fa] via-[#ffffff] to-[#f0f2f5]">
+      <header className="bg-gradient-to-b from-white to-[#f8f8f8] border-b border-[#e0e0e0] px-6 py-4 flex-shrink-0 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Link to="/" className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#f0f0f0] via-[#e0e0e0] to-[#c8c8c8] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_2px_8px_rgba(0,0,0,0.1)] border border-white/50 flex items-center justify-center">
+                <span className="text-sm font-bold bg-gradient-to-b from-[#555] to-[#888] bg-clip-text text-transparent">C</span>
+              </div>
+            </Link>
+            <h1 className="text-xl font-semibold bg-gradient-to-b from-[#333] to-[#666] bg-clip-text text-transparent">
+              Cohort Search Builder
+            </h1>
+          </div>
+          <Link to="/">
+            <button className="px-5 py-2 rounded-full bg-gradient-to-b from-[#f8f8f8] to-[#e8e8e8] border border-white/60 shadow-[0_2px_8px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.9)] text-[#555] font-medium hover:shadow-[0_4px_16px_rgba(0,0,0,0.12)] transition-all duration-300 text-sm">
+              Back
+            </button>
           </Link>
         </div>
       </header>
@@ -114,12 +122,18 @@ export function CohortBuilderPage(): ReactNode {
             />
 
             <div className="flex justify-center">
-              <Button
+              <button
                 onClick={handleRunQuery}
                 disabled={isExecutingQuery}
+                className="group relative px-8 py-3 rounded-xl font-semibold overflow-hidden transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
-                {isExecutingQuery ? 'Searching...' : 'Search Patients'}
-              </Button>
+                <div className="absolute inset-0 bg-gradient-to-b from-[#444] via-[#555] to-[#333] rounded-xl"></div>
+                <div className="absolute inset-[1px] bg-gradient-to-b from-[#666] via-[#555] to-[#444] rounded-xl"></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <span className="relative text-white drop-shadow-sm">
+                  {isExecutingQuery ? 'Searching...' : 'Search Patients'}
+                </span>
+              </button>
             </div>
 
             {hasResults && (

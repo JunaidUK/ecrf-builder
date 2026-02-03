@@ -31,10 +31,10 @@ function CriteriaButton({ label, onClick }: CriteriaButtonProps): ReactNode {
   return (
     <button
       onClick={onClick}
-      className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 rounded-md transition-colors"
+      className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[#555] hover:bg-gradient-to-r hover:from-[#f0f0f0] hover:to-[#e8e8e8] hover:text-[#333] rounded-lg transition-all duration-200"
       aria-label={`Add ${label}`}
     >
-      <span className="text-indigo-500">+</span>
+      <span className="w-5 h-5 rounded-md bg-gradient-to-b from-[#f0f0f0] to-[#e0e0e0] border border-white/60 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)] flex items-center justify-center text-xs text-[#666]">+</span>
       {label}
     </button>
   );
@@ -54,17 +54,17 @@ function CollapsibleSection({
   children,
 }: CollapsibleSectionProps): ReactNode {
   return (
-    <div className="border-b border-gray-200 last:border-b-0">
+    <div className="border-b border-[#e8e8e8] last:border-b-0">
       <button
         onClick={onToggle}
-        className="w-full flex items-center justify-between px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-50"
+        className="w-full flex items-center justify-between px-4 py-3 text-sm font-semibold bg-gradient-to-b from-[#333] to-[#555] bg-clip-text text-transparent hover:from-[#222] hover:to-[#444]"
         aria-label={`Toggle ${title} section`}
         aria-expanded={isExpanded}
       >
         {title}
-        <span className="text-gray-400">{isExpanded ? '▼' : '▶'}</span>
+        <span className="text-[#999]">{isExpanded ? '▼' : '▶'}</span>
       </button>
-      {isExpanded && <div className="pb-2">{children}</div>}
+      {isExpanded && <div className="pb-3 px-1">{children}</div>}
     </div>
   );
 }
@@ -102,10 +102,10 @@ export function CriteriaPanel({
 
   if (isCollapsed) {
     return (
-      <div className="w-12 bg-white border-r border-gray-200 flex flex-col">
+      <div className="w-12 bg-gradient-to-b from-white to-[#f8f8f8] border-r border-[#e0e0e0] flex flex-col shadow-[2px_0_8px_rgba(0,0,0,0.04)]">
         <button
           onClick={onToggleCollapse}
-          className="p-3 text-gray-500 hover:bg-gray-50"
+          className="p-3 text-[#888] hover:text-[#555] hover:bg-gradient-to-b hover:from-[#f5f5f5] hover:to-[#e8e8e8] transition-all duration-200"
           aria-label="Expand criteria panel"
         >
           ▶
@@ -115,12 +115,12 @@ export function CriteriaPanel({
   }
 
   return (
-    <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
-        <h2 className="text-sm font-semibold text-gray-900">Criteria</h2>
+    <div className="w-64 bg-gradient-to-b from-white to-[#fafafa] border-r border-[#e0e0e0] flex flex-col shadow-[2px_0_8px_rgba(0,0,0,0.04)]">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-[#e8e8e8] bg-gradient-to-b from-[#fafafa] to-[#f5f5f5]">
+        <h2 className="text-sm font-semibold bg-gradient-to-b from-[#333] to-[#666] bg-clip-text text-transparent uppercase tracking-wider">Criteria</h2>
         <button
           onClick={onToggleCollapse}
-          className="p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded"
+          className="p-1.5 text-[#888] hover:text-[#555] hover:bg-gradient-to-b hover:from-[#f0f0f0] hover:to-[#e0e0e0] rounded-lg transition-all duration-200"
           aria-label="Collapse criteria panel"
         >
           ◀
@@ -148,8 +148,8 @@ export function CriteriaPanel({
               placeholder="Search conditions..."
             />
           </div>
-          <div className="border-t border-gray-100 mt-2 pt-2">
-            <div className="px-3 py-1 text-xs text-gray-500 font-medium">Quick Add</div>
+          <div className="border-t border-[#e8e8e8] mt-2 pt-2">
+            <div className="px-3 py-1 text-xs text-[#888] font-medium uppercase tracking-wide">Quick Add</div>
             <CriteriaButton
               label="Hypertension"
               onClick={() => handleAddCondition('hypertension')}
