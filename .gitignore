@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+SnomedCT_InternationalRF2_PRODUCTION_20260101T120000Z.zip
+synthea_sample_data_fhir_r4_nov2021.zip

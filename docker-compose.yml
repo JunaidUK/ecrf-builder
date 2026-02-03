@@ -1,0 +1,131 @@
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: hapi-postgres
+    environment:
+      POSTGRES_DB: hapi
+      POSTGRES_USER: hapi
+      POSTGRES_PASSWORD: hapi
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hapi"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # HAPI FHIR R4 Server
+  hapi-fhir:
+    image: hapiproject/hapi:latest
+    container_name: hapi-fhir
+    ports:
+      - "8080:8080"
+    environment:
+      - spring.datasource.url=jdbc:postgresql://postgres:5432/hapi
+      - spring.datasource.username=hapi
+      - spring.datasource.password=hapi
+      - spring.datasource.driverClassName=org.postgresql.Driver
+      - spring.jpa.properties.hibernate.dialect=ca.uhn.fhir.jpa.model.dialect.HapiFhirPostgresDialect
+      - hapi.fhir.default_encoding=json
+      - hapi.fhir.fhir_version=R4
+      - hapi.fhir.cors.allow_credentials=true
+      - hapi.fhir.cors.allowed_origin=*
+      - hapi.fhir.subscription.resthook_enabled=false
+      - hapi.fhir.subscription.websocket_enabled=false
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # Synthea data loader
+  data-loader:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dataloader
+    container_name: synthea-data-loader
+    depends_on:
+      - hapi-fhir
+    volumes:
+      - ./synthea_sample_data_fhir_r4_nov2021.zip:/data/synthea_sample_data_fhir_r4_nov2021.zip:ro
+      - synthea-data:/data
+    environment:
+      - FHIR_SERVER_URL=http://hapi-fhir:8080/fhir
+      - ZIP_FILE=/data/synthea_sample_data_fhir_r4_nov2021.zip
+    restart: "no"
+
+  # Elasticsearch for Snowstorm
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.1
+    container_name: snowstorm-elasticsearch
+    environment:
+      - node.name=snowstorm-es
+      - cluster.name=snowstorm-cluster
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms8g -Xmx8g"
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://localhost:9200/_cluster/health | grep -q '\"status\":\"green\"\\|\"status\":\"yellow\"'"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+    restart: unless-stopped
+
+  # Snowstorm SNOMED CT Terminology Server
+  snowstorm:
+    image: snomedinternational/snowstorm:latest
+    container_name: snowstorm
+    ports:
+      - "8081:8080"
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    entrypoint: ["java", "-Djava.security.egd=file:/dev/./urandom", "--add-opens=java.base/java.lang=ALL-UNNAMED", "--add-opens=java.base/java.util=ALL-UNNAMED", "-Xms4g", "-Xmx4g", "-cp", "@/app/jib-classpath-file", "org.snomed.snowstorm.SnowstormApplication", "--elasticsearch.urls=http://elasticsearch:9200"]
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://localhost:8080/version || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 120s
+    restart: unless-stopped
+
+  # SNOMED CT data loader
+  snomed-loader:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.snomedloader
+    container_name: snomed-data-loader
+    depends_on:
+      snowstorm:
+        condition: service_healthy
+    volumes:
+      - ./SnomedCT_InternationalRF2_PRODUCTION_20260101T120000Z.zip:/data/snomed.zip:ro
+    environment:
+      - SNOWSTORM_URL=http://snowstorm:8080
+      - SNOMED_ZIP=/data/snomed.zip
+    restart: "no"
+
+  # Frontend application
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cohort-builder-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - hapi-fhir
+      - snowstorm
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
+    name: cohort-builder-postgres-data
+  synthea-data:
+    name: cohort-builder-synthea-data
+  es-data:
+    name: cohort-builder-elasticsearch-data

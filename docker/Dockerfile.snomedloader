@@ -1,0 +1,8 @@
+FROM alpine:3.19
+
+RUN apk add --no-cache curl jq
+
+COPY docker/load-snomed-data.sh /scripts/load-snomed-data.sh
+RUN chmod +x /scripts/load-snomed-data.sh
+
+CMD ["/scripts/load-snomed-data.sh"]

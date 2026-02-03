@@ -1,10 +1,9 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import type { ReactNode } from 'react';
 import DemoPage from './DemoPage';
-import { QuestionnaireProvider } from '../context/QuestionnaireContext';
 
 const mockNavigate = vi.fn();
 
@@ -17,11 +16,7 @@ vi.mock('react-router-dom', async () => {
 });
 
 function TestWrapper({ children }: { children: ReactNode }): ReactNode {
-  return (
-    <QuestionnaireProvider>
-      <MemoryRouter>{children}</MemoryRouter>
-    </QuestionnaireProvider>
-  );
+  return <MemoryRouter>{children}</MemoryRouter>;
 }
 
 describe('DemoPage', () => {
@@ -37,11 +32,11 @@ describe('DemoPage', () => {
     );
 
     expect(
-      screen.getByRole('heading', { name: 'eCRF Builder Demo' })
+      screen.getByRole('heading', { name: 'Cohort Search Builder Demo' })
     ).toBeInTheDocument();
   });
 
-  it('should render "Create new eCRF" button', () => {
+  it('should render "Start Building" button', () => {
     render(
       <TestWrapper>
         <DemoPage />
@@ -49,7 +44,7 @@ describe('DemoPage', () => {
     );
 
     expect(
-      screen.getByRole('button', { name: 'Create new eCRF' })
+      screen.getByRole('button', { name: 'Start Building' })
     ).toBeInTheDocument();
   });
 
@@ -66,7 +61,7 @@ describe('DemoPage', () => {
     );
   });
 
-  it('should open modal when "Create new eCRF" button is clicked', async () => {
+  it('should navigate to builder page when "Start Building" is clicked', async () => {
     const user = userEvent.setup();
     render(
       <TestWrapper>
@@ -74,60 +69,20 @@ describe('DemoPage', () => {
       </TestWrapper>
     );
 
-    await user.click(screen.getByRole('button', { name: 'Create new eCRF' }));
+    await user.click(screen.getByRole('button', { name: 'Start Building' }));
 
-    expect(screen.getByRole('dialog')).toBeInTheDocument();
-    expect(screen.getByLabelText(/Title/)).toBeInTheDocument();
+    expect(mockNavigate).toHaveBeenCalledWith('/builder');
   });
 
-  it('should close modal when Cancel is clicked', async () => {
-    const user = userEvent.setup();
+  it('should display description text', () => {
     render(
       <TestWrapper>
         <DemoPage />
       </TestWrapper>
     );
 
-    await user.click(screen.getByRole('button', { name: 'Create new eCRF' }));
-    expect(screen.getByRole('dialog')).toBeInTheDocument();
-
-    await user.click(screen.getByRole('button', { name: 'Cancel' }));
-    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-  });
-
-  it('should navigate to builder page after creating questionnaire', async () => {
-    const user = userEvent.setup();
-    render(
-      <TestWrapper>
-        <DemoPage />
-      </TestWrapper>
-    );
-
-    await user.click(screen.getByRole('button', { name: 'Create new eCRF' }));
-    await user.type(screen.getByLabelText(/Title/), 'Type 2 Diabetes');
-    await user.selectOptions(screen.getByLabelText(/Status/), 'draft');
-    await user.click(screen.getByRole('button', { name: 'Create' }));
-
-    await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith(expect.stringMatching(/^\/builder\/.+/));
-    });
-  });
-
-  it('should close modal after creating questionnaire', async () => {
-    const user = userEvent.setup();
-    render(
-      <TestWrapper>
-        <DemoPage />
-      </TestWrapper>
-    );
-
-    await user.click(screen.getByRole('button', { name: 'Create new eCRF' }));
-    await user.type(screen.getByLabelText(/Title/), 'Type 2 Diabetes');
-    await user.selectOptions(screen.getByLabelText(/Status/), 'draft');
-    await user.click(screen.getByRole('button', { name: 'Create' }));
-
-    await waitFor(() => {
-      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    });
+    expect(
+      screen.getByText(/Build FHIR R4 patient search queries/i)
+    ).toBeInTheDocument();
   });
 });

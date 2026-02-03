@@ -1,20 +1,20 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import DemoPage from './pages/DemoPage';
-import { BuilderPage } from './pages/BuilderPage';
-import { QuestionnaireProvider } from './context/QuestionnaireContext';
+import { CohortBuilderPage } from './pages/CohortBuilderPage';
+import { CohortSearchProvider } from './context/CohortSearchContext';
 
 function App() {
   return (
-    <QuestionnaireProvider>
+    <CohortSearchProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/demo" element={<DemoPage />} />
-          <Route path="/builder/:id" element={<BuilderPage />} />
+          <Route path="/builder" element={<CohortBuilderPage />} />
         </Routes>
       </BrowserRouter>
-    </QuestionnaireProvider>
+    </CohortSearchProvider>
   );
 }
 
