@@ -2,11 +2,5 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "vite",
   "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "rewrites": [
-    {
-      "source": "/fhir/:path*",
-      "destination": "https://hapi.fhir.org/baseR4/:path*"
-    }
-  ]
+  "outputDirectory": "dist"
 }

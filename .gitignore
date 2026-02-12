@@ -25,3 +25,12 @@ dist-ssr
 
 SnomedCT_InternationalRF2_PRODUCTION_20260101T120000Z.zip
 synthea_sample_data_fhir_r4_nov2021.zip
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# ngrok config (contains authtoken)
+ngrok.yml
+.vercel

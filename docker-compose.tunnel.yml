@@ -1,0 +1,21 @@
+# Nginx reverse proxy for combining FHIR and Snowstorm behind a single ngrok tunnel
+#
+# Usage:
+#   docker compose -f docker-compose.tunnel.yml up -d
+#   ngrok http 8888
+#
+# This creates a single endpoint where:
+#   /fhir/*      -> localhost:8080/fhir/*  (HAPI FHIR)
+#   /snowstorm/* -> localhost:8081/*       (Snowstorm)
+
+services:
+  tunnel-proxy:
+    image: nginx:alpine
+    container_name: tunnel-proxy
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./docker/nginx-tunnel.conf:/etc/nginx/conf.d/default.conf:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
