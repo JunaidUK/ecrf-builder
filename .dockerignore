@@ -1,0 +1,36 @@
+# Dependencies
+node_modules
+
+# Build output
+dist
+
+# Development files
+.git
+.gitignore
+*.md
+!README.md
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Test files
+coverage
+*.test.ts
+*.test.tsx
+__tests__
+
+# Docker files (not needed in build context for frontend)
+docker-compose.yml
+Dockerfile
+
+# Data files (handled separately)
+*.zip
+
+# Misc
+.DS_Store
+.env
+.env.*
+*.log

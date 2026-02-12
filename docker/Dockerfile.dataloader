@@ -1,0 +1,14 @@
+FROM alpine:3.19
+
+RUN apk add --no-cache \
+    bash \
+    curl \
+    unzip \
+    jq
+
+WORKDIR /app
+
+COPY docker/load-synthea-data.sh /app/load-synthea-data.sh
+RUN chmod +x /app/load-synthea-data.sh
+
+ENTRYPOINT ["/app/load-synthea-data.sh"]
