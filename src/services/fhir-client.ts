@@ -32,7 +32,6 @@ export async function searchPatients(
     method: 'GET',
     headers: {
       'Accept': 'application/fhir+json',
-      'ngrok-skip-browser-warning': 'true',
     },
   });
 
@@ -81,7 +80,6 @@ async function fetchBundle(url: string): Promise<Bundle> {
     method: 'GET',
     headers: {
       'Accept': 'application/fhir+json',
-      'ngrok-skip-browser-warning': 'true',
     },
   });
 

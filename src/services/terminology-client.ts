@@ -50,7 +50,6 @@ export async function searchConcepts(
     method: 'GET',
     headers: {
       'Accept': 'application/json',
-      'ngrok-skip-browser-warning': 'true',
       'Accept-Language': 'en',
     },
   });
@@ -84,7 +83,6 @@ export async function searchConditions(
     method: 'GET',
     headers: {
       'Accept': 'application/json',
-      'ngrok-skip-browser-warning': 'true',
       'Accept-Language': 'en',
     },
   });
@@ -112,7 +110,6 @@ export async function getICD10Mappings(
     method: 'GET',
     headers: {
       'Accept': 'application/json',
-      'ngrok-skip-browser-warning': 'true',
     },
   });
 
@@ -183,7 +180,6 @@ export async function searchByICD10Code(
     method: 'GET',
     headers: {
       'Accept': 'application/json',
-      'ngrok-skip-browser-warning': 'true',
     },
   });
 
