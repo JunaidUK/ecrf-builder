@@ -379,4 +379,149 @@ describe('CohortSearchContext', () => {
       expect(result.current.queryError).toBeNull();
     });
   });
+
+  describe('patient selection', () => {
+    const mockPatient1 = { resourceType: 'Patient' as const, id: 'patient-1' };
+    const mockPatient2 = { resourceType: 'Patient' as const, id: 'patient-2' };
+
+    it('should return empty map for selectedPatients initially', () => {
+      const { result } = renderHook(() => useCohortSearch(), {
+        wrapper: createWrapper(),
+      });
+
+      expect(result.current.selectedPatients.size).toBe(0);
+    });
+
+    it('should toggle patient selection on', () => {
+      const { result } = renderHook(() => useCohortSearch(), {
+        wrapper: createWrapper(),
+      });
+
+      act(() => {
+        result.current.togglePatientSelection(mockPatient1);
+      });
+
+      expect(result.current.selectedPatients.size).toBe(1);
+      expect(result.current.selectedPatients.get('patient-1')).toEqual(mockPatient1);
+    });
+
+    it('should toggle patient selection off', () => {
+      const { result } = renderHook(() => useCohortSearch(), {
+        wrapper: createWrapper(),
+      });
+
+      act(() => {
+        result.current.togglePatientSelection(mockPatient1);
+      });
+
+      expect(result.current.selectedPatients.size).toBe(1);
+
+      act(() => {
+        result.current.togglePatientSelection(mockPatient1);
+      });
+
+      expect(result.current.selectedPatients.size).toBe(0);
+    });
+
+    it('should check if patient is selected', () => {
+      const { result } = renderHook(() => useCohortSearch(), {
+        wrapper: createWrapper(),
+      });
+
+      expect(result.current.isPatientSelected('patient-1')).toBe(false);
+
+      act(() => {
+        result.current.togglePatientSelection(mockPatient1);
+      });
+
+      expect(result.current.isPatientSelected('patient-1')).toBe(true);
+      expect(result.current.isPatientSelected('patient-2')).toBe(false);
+    });
+
+    it('should select all patients from query results', async () => {
+      vi.useRealTimers();
+
+      const mockPatients = [mockPatient1, mockPatient2];
+
+      vi.mocked(executeQuery).mockResolvedValue({
+        patients: mockPatients,
+        total: 2,
+        bundle: { resourceType: 'Bundle', type: 'searchset' },
+      });
+
+      const { result } = renderHook(() => useCohortSearch(), {
+        wrapper: createWrapper(),
+      });
+
+      act(() => {
+        result.current.initializeSearch('Test Search');
+      });
+
+      await act(async () => {
+        await result.current.runQuery();
+      });
+
+      act(() => {
+        result.current.selectAllPatients();
+      });
+
+      expect(result.current.selectedPatients.size).toBe(2);
+      expect(result.current.isPatientSelected('patient-1')).toBe(true);
+      expect(result.current.isPatientSelected('patient-2')).toBe(true);
+    });
+
+    it('should clear all selected patients', () => {
+      const { result } = renderHook(() => useCohortSearch(), {
+        wrapper: createWrapper(),
+      });
+
+      act(() => {
+        result.current.togglePatientSelection(mockPatient1);
+        result.current.togglePatientSelection(mockPatient2);
+      });
+
+      expect(result.current.selectedPatients.size).toBe(2);
+
+      act(() => {
+        result.current.clearSelectedPatients();
+      });
+
+      expect(result.current.selectedPatients.size).toBe(0);
+    });
+
+    it('should remove a specific selected patient', () => {
+      const { result } = renderHook(() => useCohortSearch(), {
+        wrapper: createWrapper(),
+      });
+
+      act(() => {
+        result.current.togglePatientSelection(mockPatient1);
+        result.current.togglePatientSelection(mockPatient2);
+      });
+
+      expect(result.current.selectedPatients.size).toBe(2);
+
+      act(() => {
+        result.current.removeSelectedPatient('patient-1');
+      });
+
+      expect(result.current.selectedPatients.size).toBe(1);
+      expect(result.current.isPatientSelected('patient-1')).toBe(false);
+      expect(result.current.isPatientSelected('patient-2')).toBe(true);
+    });
+
+    it('should not toggle patient without id', () => {
+      const { result } = renderHook(() => useCohortSearch(), {
+        wrapper: createWrapper(),
+      });
+
+      const patientWithoutId = { resourceType: 'Patient' as const };
+
+      act(() => {
+        result.current.togglePatientSelection(patientWithoutId);
+      });
+
+      expect(result.current.selectedPatients.size).toBe(0);
+    });
+  });
 });

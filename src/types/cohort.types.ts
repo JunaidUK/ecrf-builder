@@ -50,3 +50,15 @@ export interface CohortSearchState {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface CohortExportData {
+  patientId: string;
+  patientName: string;
+  gender: string;
+  birthDate: string;
+  age: number | null;
+  conditions: string;
+  conditionCodes: string;
+  medications: string;
+  medicationCodes: string;
+}

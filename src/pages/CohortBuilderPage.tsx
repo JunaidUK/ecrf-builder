@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import type { ReactNode } from 'react';
 import type { Patient, Resource } from 'fhir/r4';
 import { Link } from 'react-router-dom';
@@ -9,6 +9,8 @@ import { QueryPreviewPanel } from '../components/cohort/QueryPreviewPanel';
 import { PatientResultsList } from '../components/cohort/PatientResultsList';
 import { PatientDetailModal } from '../components/cohort/PatientDetailModal';
 import { FhirResourcePanel } from '../components/cohort/FhirResourcePanel';
+import { SelectedCohortPanel } from '../components/cohort/SelectedCohortPanel';
+import { useCSVExport } from '../hooks/useCSVExport';
 import type { SearchCriterion } from '../types/cohort.types';
 
 export function CohortBuilderPage(): ReactNode {
@@ -17,6 +19,7 @@ export function CohortBuilderPage(): ReactNode {
     queryResults,
     isExecutingQuery,
     queryError,
+    selectedPatients,
     initializeSearch,
     addCriterion,
     updateCriterion,
@@ -24,13 +27,24 @@ export function CohortBuilderPage(): ReactNode {
     getGeneratedQuery,
     runQuery,
     clearResults,
+    togglePatientSelection,
+    selectAllPatients,
+    clearSelectedPatients,
+    removeSelectedPatient,
   } = useCohortSearch();
 
+  const { isExporting, exportProgress, exportCohort } = useCSVExport();
+
   const [isCriteriaPanelCollapsed, setIsCriteriaPanelCollapsed] = useState(false);
+  const [isCohortPanelCollapsed, setIsCohortPanelCollapsed] = useState(false);
   const [isQueryPanelExpanded, setIsQueryPanelExpanded] = useState(true);
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   const [isPatientModalOpen, setIsPatientModalOpen] = useState(false);
   const [viewedResource, setViewedResource] = useState<Resource | null>(null);
+
+  const selectedPatientIds = useMemo(() => {
+    return new Set(selectedPatients.keys());
+  }, [selectedPatients]);
 
   useEffect(() => {
     if (!currentSearch) {
@@ -76,6 +90,11 @@ export function CohortBuilderPage(): ReactNode {
 
   const handleCloseResourcePanel = (): void => {
     setViewedResource(null);
+  };
+
+  const handleGenerateECRFs = (): void => {
+    const patients = Array.from(selectedPatients.values());
+    exportCohort(patients);
   };
 
   const criteria = currentSearch?.criteria ?? [];
@@ -143,10 +162,24 @@ export function CohortBuilderPage(): ReactNode {
                 isLoading={isExecutingQuery}
                 error={queryError}
                 onPatientClick={handlePatientClick}
+                selectedPatientIds={selectedPatientIds}
+                onToggleSelection={togglePatientSelection}
+                onSelectAll={selectAllPatients}
               />
             )}
           </div>
         </main>
+
+        <SelectedCohortPanel
+          selectedPatients={selectedPatients}
+          isCollapsed={isCohortPanelCollapsed}
+          onToggleCollapse={() => setIsCohortPanelCollapsed(!isCohortPanelCollapsed)}
+          onRemovePatient={removeSelectedPatient}
+          onClearAll={clearSelectedPatients}
+          onGenerateECRFs={handleGenerateECRFs}
+          isExporting={isExporting}
+          exportProgress={exportProgress}
+        />
       </div>
 
       <QueryPreviewPanel

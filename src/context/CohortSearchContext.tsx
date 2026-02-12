@@ -15,6 +15,7 @@ interface CohortSearchContextValue {
   queryResults: QueryResults | null;
   isExecutingQuery: boolean;
   queryError: string | null;
+  selectedPatients: Map<string, Patient>;
   initializeSearch: (name: string) => void;
   addCriterion: (criterion: SearchCriterion) => void;
   updateCriterion: (id: string, updates: Partial<SearchCriterion>) => void;
@@ -23,6 +24,11 @@ interface CohortSearchContextValue {
   runQuery: () => Promise<void>;
   clearResults: () => void;
   clearSearch: () => void;
+  isPatientSelected: (patientId: string) => boolean;
+  togglePatientSelection: (patient: Patient) => void;
+  selectAllPatients: () => void;
+  clearSelectedPatients: () => void;
+  removeSelectedPatient: (patientId: string) => void;
 }
 
 const CohortSearchContext = createContext<CohortSearchContextValue | null>(null);
@@ -44,6 +50,9 @@ export function CohortSearchProvider({
   const [queryResults, setQueryResults] = useState<QueryResults | null>(null);
   const [isExecutingQuery, setIsExecutingQuery] = useState(false);
   const [queryError, setQueryError] = useState<string | null>(null);
+  const [selectedPatients, setSelectedPatients] = useState<Map<string, Patient>>(
+    new Map()
+  );
 
   const initializeSearch = useCallback((name: string): void => {
     const now = new Date().toISOString();
@@ -146,11 +155,63 @@ export function CohortSearchProvider({
     setQueryError(null);
   }, []);
 
+  const isPatientSelected = useCallback(
+    (patientId: string): boolean => {
+      return selectedPatients.has(patientId);
+    },
+    [selectedPatients]
+  );
+
+  const togglePatientSelection = useCallback((patient: Patient): void => {
+    if (!patient.id) {
+      return;
+    }
+
+    setSelectedPatients((prev) => {
+      const newMap = new Map(prev);
+      if (newMap.has(patient.id as string)) {
+        newMap.delete(patient.id as string);
+      } else {
+        newMap.set(patient.id as string, patient);
+      }
+      return newMap;
+    });
+  }, []);
+
+  const selectAllPatients = useCallback((): void => {
+    if (!queryResults?.patients) {
+      return;
+    }
+
+    setSelectedPatients((prev) => {
+      const newMap = new Map(prev);
+      for (const patient of queryResults.patients) {
+        if (patient.id) {
+          newMap.set(patient.id, patient);
+        }
+      }
+      return newMap;
+    });
+  }, [queryResults]);
+
+  const clearSelectedPatients = useCallback((): void => {
+    setSelectedPatients(new Map());
+  }, []);
+
+  const removeSelectedPatient = useCallback((patientId: string): void => {
+    setSelectedPatients((prev) => {
+      const newMap = new Map(prev);
+      newMap.delete(patientId);
+      return newMap;
+    });
+  }, []);
+
   const value: CohortSearchContextValue = {
     currentSearch,
     queryResults,
     isExecutingQuery,
     queryError,
+    selectedPatients,
     initializeSearch,
     addCriterion,
     updateCriterion,
@@ -159,6 +220,11 @@ export function CohortSearchProvider({
     runQuery,
     clearResults,
     clearSearch,
+    isPatientSelected,
+    togglePatientSelection,
+    selectAllPatients,
+    clearSelectedPatients,
+    removeSelectedPatient,
   };
 
   return (
